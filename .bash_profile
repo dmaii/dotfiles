@@ -69,4 +69,9 @@ unset __conda_setup
 export VAGRANT_MEM=16384
 export AWS_SDK_LOAD_CONFIG=true
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+
+# Append to the history file, rather than overwriting it
+shopt -s histappend
+
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
