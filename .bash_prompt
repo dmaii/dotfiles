@@ -17,12 +17,16 @@ if tput setaf 1 &> /dev/null; then
     GREEN=$(tput setaf 190)
     PURPLE=$(tput setaf 141)
     WHITE=$(tput setaf 256)
+    YELLOW=$(tput setaf 228)
+    BLUE=$(tput setaf 87)
   else
     MAGENTA=$(tput setaf 5)
     ORANGE=$(tput setaf 4)
     GREEN=$(tput setaf 2)
     PURPLE=$(tput setaf 1)
     WHITE=$(tput setaf 7)
+    YELLOW=$(tput setaf 228)
+    BLUE=$(tput setaf 87)
   fi
   BOLD=$(tput bold)
   RESET=$(tput sgr0)
@@ -33,7 +37,9 @@ else
   PURPLE="\033[1;35m"
   WHITE="\033[1;37m"
   BOLD=""
+  YELLOW=$(tput setaf 228)
   RESET="\033[m"
+  BLUE=$(tput setaf 87)
 fi
 
 
@@ -46,9 +52,21 @@ function parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
+computer_name="$(hostname)"
+current_directory="$(pwd)"
+git_branch="$(parse_git_branch)"
+
 # Only show username/host if not default
+#function usernamehost() {
+#  if [ $USER != $default_username ]; then echo "🐹 ${BLUE}$USER ${RESET}at ${ORANGE}${computer_name} ${YELLOW}${current_directory} ${RESET}on ${PURPLE}${git_branch} \n${BLUE}\$ ${RESET}"; fi
+#}
 function usernamehost() {
-  if [ $USER != $default_username ]; then echo "🐹 ${MAGENTA}$USER ${WHITE}at ${ORANGE}$HOSTNAME $WHITEin "; fi
+  git_branch=""
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    git_branch="${RESET}on ${PURPLE}$(parse_git_branch) "
+  fi
+  if [ $USER != $default_username ]; then echo -e "🐹 ${BLUE}$USER ${RESET}at ${ORANGE}${computer_name} ${YELLOW}${current_directory} ${git_branch}\n${BLUE}\$ ${RESET}"; fi
 }
 
-PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]${BOLD}\$(usernamehost)\[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
+PS1='$(usernamehost)'
+export PS1
