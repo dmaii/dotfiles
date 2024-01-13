@@ -36,3 +36,37 @@ export LANG="en_US"
 # Add tab completion for `defaults read|write NSGlobalDomain`
 # You could just use `-g` instead, but I like being explicit
 complete -W "NSGlobalDomain" defaults
+eval "$(rbenv init -)"
+eval "$(direnv hook bash)"
+cd ~/src
+export PATH="/usr/local/opt/thrift@0.9/bin:$PATH"
+export PATH="/usr/local/opt/bison/bin:$PATH"
+export PATH="/Users/david.mai/.local/bin:$PATH"
+export PATH="/Users/david.mai/Library/Python/2.7/bin:$PATH"
+export PATH="/Users/david.mai/Library/Python/2.7/bin:$PATH"
+export PATH="/users/david.mai/miniconda/condabin:$PATH"
+export MFA_DEVICE='arn:aws:iam::210246326331:mfa/david.mai'
+export GOPATH=$HOME/src
+eval "$(pyenv init -)"
+
+[[ -s "/Users/david.mai/.gvm/scripts/gvm" ]] && source "/Users/david.mai/.gvm/scripts/gvm"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/david.mai/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/david.mai/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/david.mai/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/david.mai/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+export VAGRANT_MEM=16384
+export AWS_SDK_LOAD_CONFIG=true
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"

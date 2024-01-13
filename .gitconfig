@@ -5,7 +5,7 @@
 [help]
 	autocorrect = 1
 [color]
-  ui = always
+	ui = true
 [apply]
   whitespace = fix
 [core]
@@ -55,4 +55,11 @@
   enabled = true
 [user]
 	name = David Mai
-	email = david.mai@isocket.com
+	email = david.mai@reddit.com
+[url "git@github.snooguts.net:"]
+	insteadOf = https://github.snooguts.net/
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
